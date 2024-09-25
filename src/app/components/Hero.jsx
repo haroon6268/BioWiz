@@ -3,7 +3,7 @@ import React from "react";
 
 const Hero = () => {
   return (
-    <div className="xs:h-[85vh] lg:h-[60vh] flex justify-center items-center p-6 lg:min-h-[600px] lg:max-h-[700px]">
+    <div className="xs:h-[100vh] lg:h-[60vh] flex justify-center items-center p-6 lg:min-h-[600px] lg:max-h-[700px]">
       <div className="max-w-[1200px] flex xs:flex-col lg:flex-row w-full justify-center xs:space-y-6 lg:space-y-0 items-center lg:space-x-2">
         <div className="space-y-6 max-w-[600px]">
           <h1 className="text-5xl lg:text-6xl font-extrabold tracking-tighter">
