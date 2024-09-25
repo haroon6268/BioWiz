@@ -4,10 +4,11 @@ import fs from "fs/promises";
 import ImageModel from "@/app/models/image";
 import { uploadFile } from "@/app/lib/cloudStorage";
 import { dbConnect } from "@/app/lib/dbConnect";
+import { getGCPCredentials } from "@/app/lib/getGcpCredentials";
 
 export async function GET() {
   await dbConnect();
-  const client = new DocumentProcessorServiceClient();
+  const client = new DocumentProcessorServiceClient(getGCPCredentials());
   const name = "projects/832593823455/locations/us/processors/79eb62ab2e02cbd1";
   const imgPath = "public/test.png";
   const mimeTypes = {
