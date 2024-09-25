@@ -1,6 +1,7 @@
 import { DocumentProcessorServiceClient } from "@google-cloud/documentai";
+import { getGCPCredentials } from "./getGcpCredentials";
 export async function scan(uri, mime) {
-  const client = new DocumentProcessorServiceClient();
+  const client = new DocumentProcessorServiceClient(getGCPCredentials());
   const name = "projects/832593823455/locations/us/processors/79eb62ab2e02cbd1";
 
   const mimeTypes = {

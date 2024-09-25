@@ -7,6 +7,7 @@ import { scan } from "@/app/lib/OCRscan";
 import { toBufferFromFile } from "@/app/lib/toFileBuffer";
 import { uploadFile } from "@/app/lib/cloudStorage";
 import { processImg } from "@/app/lib/process";
+import dotenv from "dotenv/config";
 
 /*
 Description: The purpose of this post request is to process the given file to identify text
@@ -53,4 +54,7 @@ export async function POST(request) {
   return NextResponse.json({ status: 200 });
 }
 
-export async function GET() {}
+export async function GET() {
+  console.log(process.env.GCP_PROJECT_ID);
+  return NextResponse.json({ status: 200 });
+}
