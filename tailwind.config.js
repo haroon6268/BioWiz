@@ -13,7 +13,7 @@ module.exports = {
         "primary-yellow": "#FCCD2A",
       },
       screens: {
-        xs: "400px",
+        xs: "300px",
       },
     },
   },
