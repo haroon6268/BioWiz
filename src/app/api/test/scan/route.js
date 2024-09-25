@@ -3,8 +3,10 @@ import { DocumentProcessorServiceClient } from "@google-cloud/documentai";
 import fs from "fs/promises";
 import ImageModel from "@/app/models/image";
 import { uploadFile } from "@/app/lib/cloudStorage";
+import { dbConnect } from "@/app/lib/dbConnect";
 
-export async function GET(request) {
+export async function GET() {
+  await dbConnect();
   const client = new DocumentProcessorServiceClient();
   const name = "projects/832593823455/locations/us/processors/79eb62ab2e02cbd1";
   const imgPath = "public/test.png";

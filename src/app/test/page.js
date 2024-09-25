@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { postRequest } from "../lib/fetcher";
 import Image from "next/image";
 
-const page = () => {
+const Page = () => {
   const [file, setFile] = useState(null);
   const handleChange = (files) => {
     setFile(files[0]);
@@ -34,4 +34,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

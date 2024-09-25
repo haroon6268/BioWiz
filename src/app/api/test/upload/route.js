@@ -4,8 +4,10 @@ import fs from "fs/promises";
 import ImageModel from "@/app/models/image";
 import sharp from "sharp";
 import { uploadFile } from "@/app/lib/cloudStorage";
+import { dbConnect } from "@/app/lib/dbConnect";
 
-export async function GET(request) {
+export async function GET() {
+  dbConnect();
   const imgPath = "public/test.png";
   const result = await ImageModel.findById("66f2c988465ebd1b739793d2");
   //const boundingBox =

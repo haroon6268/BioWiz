@@ -53,8 +53,4 @@ export async function POST(request) {
   return NextResponse.json({ status: 200 });
 }
 
-export async function GET(request) {
-  const result = await ImageModel.findById("66f1d12ee0a48d2dbe5e3cba");
-
-  return NextResponse.json({ result });
-}
+export async function GET() {}
