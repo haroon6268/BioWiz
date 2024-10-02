@@ -1,7 +1,7 @@
 import { DocumentProcessorServiceClient } from "@google-cloud/documentai";
 import { getGCPCredentials } from "./getGcpCredentials";
+const client = new DocumentProcessorServiceClient();
 export async function scan(uri, mime) {
-  const client = new DocumentProcessorServiceClient(getGCPCredentials());
   const name = "projects/832593823455/locations/us/processors/79eb62ab2e02cbd1";
 
   const mimeTypes = {
@@ -10,13 +10,12 @@ export async function scan(uri, mime) {
     pdf: "application/pdf",
   };
 
-  const mimeType = mimeTypes[mime];
-
+  const mimeType = mimeTypes["png"];
   const req = {
     name,
     gcsDocument: {
       gcsUri: uri,
-      mimeType: mime,
+      mimeType: "image/png",
     },
   };
   const [result] = await client.processDocument(req);

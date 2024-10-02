@@ -6,8 +6,11 @@ import TrustedBy from "./components/TrustedBy";
 import SplitContent from "./components/SplitContent";
 import CTA from "./components/CTA";
 import Footer from "./components/Footer";
+import SignIn from "./components/GoogleSignin";
+import { getServerSession } from "next-auth";
+import { auth } from "@/auth";
 
-export default function Home() {
+export default async function Home() {
   return (
     <div>
       <Hero />

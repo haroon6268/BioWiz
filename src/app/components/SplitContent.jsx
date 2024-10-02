@@ -4,7 +4,7 @@ import Button from "./Button";
 const SplitContent = ({ img, header, subHeader, reverse }) => {
   const isReversed = reverse ? "flex-row-reverse" : "flex-row";
   return (
-    <div className="h-[70vh] lg:h-[60vh] p-6 flex justify-center items-center min-h-[700px] lg:max-h-[800px]">
+    <div className="bg-white h-[70vh] lg:h-[60vh] p-6 flex justify-center items-center min-h-[700px] lg:max-h-[800px]">
       <div
         className={`max-w-[1200px] h-full flex xs:flex-col-reverse ${
           reverse ? "lg:flex-row-reverse" : "lg:flex-row"

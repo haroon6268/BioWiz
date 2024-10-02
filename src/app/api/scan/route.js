@@ -5,9 +5,11 @@ import { dbConnect } from "@/app/lib/dbConnect";
 import ImageModel from "@/app/models/image";
 import { scan } from "@/app/lib/OCRscan";
 import { toBufferFromFile } from "@/app/lib/toFileBuffer";
-import { uploadFile } from "@/app/lib/cloudStorage";
+import { downloadFile, uploadFile } from "@/app/lib/cloudStorage";
 import { processImg } from "@/app/lib/process";
 import dotenv from "dotenv/config";
+import sharp from "sharp";
+import path from "path";
 
 /*
 Description: The purpose of this post request is to process the given file to identify text
@@ -26,20 +28,20 @@ export async function POST(request) {
     return NextResponse.json({ status: 400, message: "You must send a file" });
   }
 
-  // //if (mime != "png" && mime != "jpg" && mime != "pdf") {
+  // if (mime != "png" && mime != "jpg" && mime != "pdf") {
   //   return NextResponse.json({
   //     status: 400,
   //     message: "incorrect mime type given",
   //   });
   // }
 
-  const preProccessBuffer = await toBufferFromFile(file);
+  const preProccessBuffer = await toBufferFromFile(
+    await fs.readFile("../../../../public/test.png")
+  );
 
-  const response = await uploadFile(preProccessBuffer);
+  console.log(preProccessBuffer);
 
-  let uri = "gs://my-ai-image-bucket/" + response;
-
-  const result = await scan(uri, "image/png");
+  //const result = await scan(uri, "image/png");
 
   //From the result, you have to loop through the pages to get each page
   //loop through each block within each page
@@ -55,6 +57,19 @@ export async function POST(request) {
 }
 
 export async function GET() {
-  console.log(process.env.GCP_PROJECT_ID);
+  let height = 100;
+  let width = 100;
+  const overlay = Buffer.from(
+    `<svg width="${width}" height="${height}">
+        <rect x="0" y="0" width="${width}" height="${height}"
+        style="fill:#fccd2a;fill-opacity:1;stroke-width:5;stroke:#fccd2a" />
+     </svg>`
+  );
+  const filePath = path.join(__dirname); // Write to a local directory, not root
+
+  const file = await fs.readFile("/Users/haroon/Desktop/Web/anato/testing.png");
+  await sharp(file)
+    .composite([{ input: overlay, top: 100, left: 100 }]) // Add the overlay at the given position
+    .toFile("/Users/haroon/Desktop/Web/anato/testing3.png"); // Save the resulting image
   return NextResponse.json({ status: 200 });
 }

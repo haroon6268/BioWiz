@@ -1,7 +1,7 @@
 import { Storage } from "@google-cloud/storage";
 import { v4 } from "uuid";
 import { getGCPCredentials } from "./getGcpCredentials";
-const storage = new Storage(getGCPCredentials);
+const storage = new Storage();
 const bucketName = "my-ai-image-bucket";
 
 /*

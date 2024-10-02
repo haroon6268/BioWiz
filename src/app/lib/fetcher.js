@@ -1,12 +1,23 @@
 import axios from "axios";
 let baseUrl = "http://localhost:3000/api";
-export async function getRequest(path) {}
 
 export async function postRequest(path, options) {
-  let response;
-  axios
-    .post(baseUrl + path, options)
-    .then((res) => console.log(res))
-    .catch((err) => console.log(err));
-  return response;
+  try {
+    let res = await axios.post(baseUrl + path, options);
+    return res;
+  } catch (err) {
+    return err;
+  }
+}
+
+export async function getRequest(path, options) {
+  try {
+    const req = await axios.get(baseUrl + path, {
+      ...options,
+      withCredentials: true,
+    });
+    return req;
+  } catch (err) {
+    return err;
+  }
 }
