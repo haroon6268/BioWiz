@@ -1,4 +1,3 @@
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -9,61 +8,69 @@ datasource db {
 }
 
 model User {
-  id            String          @id @default(auto()) @map("_id") @db.ObjectId
+  id            String         @id @default(auto()) @map("_id") @db.ObjectId
   name          String?
-  email         String?         @unique
+  email         String?        @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
   sessions      Session[]
   flashCardSets FlashCardSet[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
 }
 
 model FlashCardSet {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  user User @relation(fields:[userId], references: [id], onDelete: Cascade)
-  userId String @db.ObjectId
-  title String
+  id          String      @id @default(auto()) @map("_id") @db.ObjectId
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String      @db.ObjectId
+  title       String
   description String
-  flashcards Flashcard[]
-  createdAt DateTime @default(now())
+  flashcards  Flashcard[]
+  createdAt   DateTime    @default(now())
 }
 
-model Flashcard{
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  key String
-  value String
-  image Image @relation(fields: [imageId], references: [id], onDelete: Cascade)
-  imageId String @db.ObjectId
-  boundingBox BoundingBox @relation(fields:[boxId], references: [id])
-  boxId String @db.ObjectId @unique
-  flashCardSet FlashCardSet @relation(fields:[setId], references: [id])
-  setId String @db.ObjectId
+model Flashcard {
+  id           String       @id @default(auto()) @map("_id") @db.ObjectId
+  key          String
+  value        String
+  image        Image        @relation(fields: [imageId], references: [id], onDelete: Cascade)
+  imageId      String       @db.ObjectId
+  cardImage    CardImage    @relation(fields: [cardImageId], references: [id], onDelete: Cascade)
+  cardImageId  String       @db.ObjectId
+  boundingBox  BoundingBox  @relation(fields: [boxId], references: [id])
+  boxId        String       @unique @db.ObjectId
+  flashCardSet FlashCardSet @relation(fields: [setId], references: [id])
+  setId        String       @db.ObjectId
 }
 
-model BoundingBox{
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  x Float
-  y Float
-  width Float
-  height Float
-  text String
-  flashcard Flashcard? @relation
-  flashcardId String? @db.ObjectId
-  image Image @relation(fields: [imageId], references: [id], onDelete: Cascade)
-  imageId String @db.ObjectId
+model BoundingBox {
+  id          String     @id @default(auto()) @map("_id") @db.ObjectId
+  x           Float
+  y           Float
+  width       Float
+  height      Float
+  text        String
+  flashcard   Flashcard? @relation
+  flashcardId String?    @db.ObjectId
+  image       Image      @relation(fields: [imageId], references: [id], onDelete: Cascade)
+  imageId     String     @db.ObjectId
 }
 
-model Image{
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  preProcessUri String
+model Image {
+  id             String        @id @default(auto()) @map("_id") @db.ObjectId
+  preProcessUri  String
   postProcessUri String
-  preProcessUrl String
+  preProcessUrl  String
   postProcessUrl String
-  boundingBoxes BoundingBox[]
-  flashCards Flashcard[]
+  boundingBoxes  BoundingBox[]
+  flashCards     Flashcard[]
+}
+
+model CardImage {
+  id         String      @id @default(auto()) @map("_id") @db.ObjectId
+  URL        String
+  flashcards Flashcard[]
 }
 
 model Account {
@@ -79,32 +86,31 @@ model Account {
   scope             String?
   id_token          String? @db.String
   session_state     String?
- 
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
- 
+
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
- 
+
   @@unique([provider, providerAccountId])
 }
- 
+
 model Session {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
   sessionToken String   @unique
   userId       String   @db.ObjectId
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
- 
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
- 
+
 model VerificationToken {
   id         String   @id @default(auto()) @map("_id") @db.ObjectId
   identifier String
   token      String
   expires    DateTime
- 
+
   @@unique([identifier, token])
 }
-
